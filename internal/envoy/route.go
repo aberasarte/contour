@@ -17,10 +17,13 @@ import (
 	"fmt"
 	"regexp"
 	"sort"
+	"strings"
 
 	v2 "github.com/envoyproxy/go-control-plane/envoy/api/v2"
 	envoy_api_v2_core "github.com/envoyproxy/go-control-plane/envoy/api/v2/core"
 	envoy_api_v2_route "github.com/envoyproxy/go-control-plane/envoy/api/v2/route"
+	envoy_type "github.com/envoyproxy/go-control-plane/envoy/type"
+	matcher "github.com/envoyproxy/go-control-plane/envoy/type/matcher"
 	"github.com/golang/protobuf/ptypes/duration"
 	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	"github.com/projectcontour/contour/internal/dag"
@@ -269,7 +272,7 @@ func weightedClusters(clusters []*dag.Cluster) *envoy_api_v2_route.WeightedClust
 }
 
 // VirtualHost creates a new route.VirtualHost.
-func VirtualHost(hostname string, routes ...*envoy_api_v2_route.Route) *envoy_api_v2_route.VirtualHost {
+func VirtualHost(hostname string, corspolicy *envoy_api_v2_route.CorsPolicy, routes ...*envoy_api_v2_route.Route) *envoy_api_v2_route.VirtualHost {
 	domains := []string{hostname}
 	if hostname != "*" {
 		// NOTE(jpeach) see also envoy.FilterMisdirectedRequests().
@@ -279,6 +282,7 @@ func VirtualHost(hostname string, routes ...*envoy_api_v2_route.Route) *envoy_ap
 	return &envoy_api_v2_route.VirtualHost{
 		Name:    hashname(60, hostname),
 		Domains: domains,
+		Cors:    corspolicy,
 		Routes:  routes,
 	}
 }
@@ -292,6 +296,43 @@ func RouteConfiguration(name string, virtualhosts ...*envoy_api_v2_route.Virtual
 			AppendHeader("x-request-start", "t=%START_TIME(%s.%3f)%"),
 		),
 	}
+}
+
+// CorsPolicy returns a *v2.CorsCorsPolicy
+func CorsPolicy(cp *dag.CorsPolicy) *envoy_api_v2_route.CorsPolicy {
+	if cp == nil {
+		return nil
+	}
+	rcp := &envoy_api_v2_route.CorsPolicy{
+		EnabledSpecifier: &envoy_api_v2_route.CorsPolicy_FilterEnabled{
+			FilterEnabled: &envoy_api_v2_core.RuntimeFractionalPercent{
+				DefaultValue: &envoy_type.FractionalPercent{
+					Numerator:   100,
+					Denominator: envoy_type.FractionalPercent_HUNDRED,
+				},
+			},
+		},
+		AllowCredentials: &wrappers.BoolValue{
+			Value: cp.AllowCredentials,
+		},
+		AllowHeaders:  strings.Join(cp.AllowHeaders, ","),
+		AllowMethods:  strings.Join(cp.AllowMethods, ","),
+		ExposeHeaders: strings.Join(cp.ExposeHeaders, ","),
+	}
+
+	if !cp.MaxAge.UseDefault() {
+		rcp.MaxAge = fmt.Sprintf("%f", cp.MaxAge.Duration().Seconds())
+	}
+
+	rcp.AllowOriginStringMatch = []*matcher.StringMatcher{}
+	for _, ao := range cp.AllowOrigin {
+		rcp.AllowOriginStringMatch = append(rcp.AllowOriginStringMatch, &matcher.StringMatcher{
+			MatchPattern: &matcher.StringMatcher_Prefix{
+				Prefix: ao,
+			},
+		})
+	}
+	return rcp
 }
 
 func Headers(first *envoy_api_v2_core.HeaderValueOption, rest ...*envoy_api_v2_core.HeaderValueOption) []*envoy_api_v2_core.HeaderValueOption {

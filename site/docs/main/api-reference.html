@@ -434,6 +434,101 @@ string
 </p>
 <p>
 </p>
+<h3 id="projectcontour.io/v1.CorsPolicy">CorsPolicy
+</h3>
+<p>
+(<em>Appears on:</em>
+<a href="#projectcontour.io/v1.VirtualHost">VirtualHost</a>)
+</p>
+<p>
+<p>CorsPolicy allows setting de CORS policy</p>
+</p>
+<table class="table table-striped table-borderless" style="border:none">
+<thead class="border-bottom">
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody class="border-top">
+<tr>
+<td style="white-space:nowrap">
+<code>allowCredentials</code>
+<br>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies whether the resource allows credentials.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>allowOrigin</code>
+<br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>AllowOrigin specifies the origins that will be allowed to do CORS requests.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>allowMethods</code>
+<br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>AllowMethods specifies the content for the <em>access-control-allow-methods</em> header.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>allowHeaders</code>
+<br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>AllowHeaders specifies the content for the <em>access-control-allow-headers</em> header.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>exposeHeaders</code>
+<br>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ExposeHeaders Specifies the content for the <em>access-control-expose-headers</em> header.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>maxAge</code>
+<br>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>MaxAge specifies the content for the <em>access-control-max-age</em> header.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="projectcontour.io/v1.DetailedCondition">DetailedCondition
 </h3>
 <p>
@@ -2273,6 +2368,21 @@ TLS
 <p>If present describes tls properties. The SNI names that will be matched on
 are described in fqdn, the tls.secretName secret must contain a
 certificate that itself contains a name that matches the FQDN.</p>
+</td>
+</tr>
+<tr>
+<td style="white-space:nowrap">
+<code>corsPolicy</code>
+<br>
+<em>
+<a href="#projectcontour.io/v1.CorsPolicy">
+CorsPolicy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the CORS policy to apply for the matched path.</p>
 </td>
 </tr>
 </tbody>

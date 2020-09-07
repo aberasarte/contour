@@ -64,6 +64,7 @@ func TestExternalNameService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("*",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeCluster("default/kuard/80/da39a3ee5e"),
@@ -99,6 +100,7 @@ func TestExternalNameService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeCluster("default/kuard/80/da39a3ee5e"),
@@ -142,6 +144,7 @@ func TestExternalNameService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeHostRewrite("default/kuard/80/da39a3ee5e", "external.address"),
@@ -187,6 +190,7 @@ func TestExternalNameService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeHostRewrite("default/kuard/80/da39a3ee5e", "external.address"),
@@ -242,6 +246,7 @@ func TestExternalNameService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeHostRewrite("default/kuard/80/da39a3ee5e", "external.address"),

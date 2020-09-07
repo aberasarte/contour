@@ -116,6 +116,27 @@ func headersPolicy(policy *projcontour.HeadersPolicy, allowHostRewrite bool) (*H
 	}, nil
 }
 
+func corsPolicy(policy *projcontour.CorsPolicy) (*CorsPolicy, error) {
+	if policy == nil {
+		return nil, nil
+	}
+	maxAge := timeout.DefaultSetting()
+	if perTryMaxAge, err := time.ParseDuration(policy.MaxAge); err == nil {
+		maxAge = timeout.DurationSetting(perTryMaxAge)
+		if maxAge.Duration().Seconds() < 0 {
+			return nil, fmt.Errorf("invalid max age value: %q", policy.MaxAge)
+		}
+	}
+	return &CorsPolicy{
+		AllowCredentials: policy.AllowCredentials,
+		AllowHeaders:     policy.AllowHeaders,
+		AllowMethods:     policy.AllowMethods,
+		AllowOrigin:      policy.AllowOrigin,
+		ExposeHeaders:    policy.ExposeHeaders,
+		MaxAge:           maxAge,
+	}, nil
+}
+
 // ingressRetryPolicy builds a RetryPolicy from ingress annotations.
 func ingressRetryPolicy(ingress *v1beta1.Ingress) *RetryPolicy {
 	retryOn := annotation.CompatAnnotation(ingress, "retry-on")

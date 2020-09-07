@@ -677,12 +677,16 @@ func TestRouteConfiguration(t *testing.T) {
 		"one virtualhost": {
 			name: "ingress_https",
 			virtualhosts: virtualhosts(
-				VirtualHost("www.example.com"),
+				VirtualHost("www.example.com",
+					nil, /*corsPolicy*/
+				),
 			),
 			want: &v2.RouteConfiguration{
 				Name: "ingress_https",
 				VirtualHosts: virtualhosts(
-					VirtualHost("www.example.com"),
+					VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
+					),
 				),
 				RequestHeadersToAdd: []*envoy_api_v2_core.HeaderValueOption{{
 					Header: &envoy_api_v2_core.HeaderValue{
@@ -728,7 +732,7 @@ func TestVirtualHost(t *testing.T) {
 	}
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := VirtualHost(tc.hostname)
+			got := VirtualHost(tc.hostname, nil /*corsPolicy*/)
 			protobuf.ExpectEqual(t, tc.want, got)
 		})
 	}

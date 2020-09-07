@@ -59,6 +59,7 @@ func TestHeaderPolicy_ReplaceHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeHostRewrite("default/svc1/80/da39a3ee5e", "goodbye.planet"),
@@ -92,6 +93,7 @@ func TestHeaderPolicy_ReplaceHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeCluster("default/svc1/80/da39a3ee5e"),
@@ -133,6 +135,7 @@ func TestHeaderPolicy_ReplaceHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeCluster("default/svc1/80/da39a3ee5e"),
@@ -190,6 +193,7 @@ func TestHeaderPolicy_ReplaceHeader_HTTProxy(t *testing.T) {
 		Resources: routeResources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/"),
 						Action: &envoy_api_v2_route.Route_Redirect{
@@ -203,6 +207,7 @@ func TestHeaderPolicy_ReplaceHeader_HTTProxy(t *testing.T) {
 			),
 			envoy.RouteConfiguration("https/hello.world",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeHostRewrite("default/externalname/443/da39a3ee5e", "goodbye.planet"),

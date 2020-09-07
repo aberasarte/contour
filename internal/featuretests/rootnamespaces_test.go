@@ -136,6 +136,7 @@ func TestRootNamespaces(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hp2.example.com",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: routeCluster("roots/kuard/8080/da39a3ee5e"),

@@ -56,6 +56,7 @@ func TestLoadBalancerPolicySessionAffinity(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("www.example.com",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/cart"),
 						Action: withSessionAffinity(routeCluster("default/app/80/e4f81994fe")),
@@ -92,6 +93,7 @@ func TestLoadBalancerPolicySessionAffinity(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("www.example.com",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/cart"),
 						Action: withSessionAffinity(

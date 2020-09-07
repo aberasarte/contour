@@ -71,6 +71,7 @@ func basic(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/api/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/v1/"),
@@ -121,6 +122,7 @@ func basic(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/api/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/v2/"),
@@ -172,6 +174,7 @@ func basic(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/api/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/full/"),
@@ -200,6 +203,7 @@ func basic(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/empty"),
@@ -268,6 +272,7 @@ func multiInclude(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("host1.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/v1/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/v1/"),
@@ -278,6 +283,7 @@ func multiInclude(t *testing.T) {
 					},
 				),
 				envoy.VirtualHost("host2.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/v2/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/v2/"),
@@ -309,6 +315,7 @@ func multiInclude(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("host1.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/v1/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/api/v1/"),
@@ -319,6 +326,7 @@ func multiInclude(t *testing.T) {
 					},
 				),
 				envoy.VirtualHost("host2.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/v2"),
 						Action: routeCluster("default/kuard/8080/da39a3ee5e"),
@@ -389,6 +397,7 @@ func replaceWithSlash(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("host1.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/foo/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/"),
@@ -399,6 +408,7 @@ func replaceWithSlash(t *testing.T) {
 					},
 				),
 				envoy.VirtualHost("host2.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/bar/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/"),
@@ -434,6 +444,7 @@ func replaceWithSlash(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("host1.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/foo/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/"),
@@ -444,6 +455,7 @@ func replaceWithSlash(t *testing.T) {
 					},
 				),
 				envoy.VirtualHost("host2.projectcontour.io",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: withPrefixRewrite(routeCluster("default/kuard/8080/da39a3ee5e"), "/bar"),
@@ -509,7 +521,7 @@ func artifactoryDocker(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("artifactory.projectcontour.io",
-
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/v2/container-sandbox/"),
 						Action: withPrefixRewrite(routeCluster("artifactory/service/8080/da39a3ee5e"),

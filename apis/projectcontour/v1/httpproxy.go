@@ -112,6 +112,9 @@ type VirtualHost struct {
 	// certificate that itself contains a name that matches the FQDN.
 	// +optional
 	TLS *TLS `json:"tls,omitempty"`
+	// Specifies the CORS policy to apply for the matched path.
+	// +optional
+	CorsPolicy *CorsPolicy `json:"corsPolicy,omitempty"`
 }
 
 // TLS describes tls properties. The SNI names that will be matched on
@@ -144,6 +147,26 @@ type TLS struct {
 	// EnableFallbackCertificate defines if the vhost should allow a default certificate to
 	// be applied which handles all requests which don't match the SNI defined in this vhost.
 	EnableFallbackCertificate bool `json:"enableFallbackCertificate,omitempty"`
+}
+
+// CorsPolicy allows setting de CORS policy
+type CorsPolicy struct {
+	// Specifies whether the resource allows credentials.
+	//  +optional
+	AllowCredentials bool `json:"allowCredentials"`
+	// AllowOrigin specifies the origins that will be allowed to do CORS requests.
+	AllowOrigin []string `json:"allowOrigin"`
+	// AllowMethods specifies the content for the *access-control-allow-methods* header.
+	AllowMethods []string `json:"allowMethods"`
+	// AllowHeaders specifies the content for the *access-control-allow-headers* header.
+	//  +optional
+	AllowHeaders []string `json:"allowHeaders"`
+	//  +optional
+	// ExposeHeaders Specifies the content for the *access-control-expose-headers* header.
+	ExposeHeaders []string `json:"exposeHeaders"`
+	//  +optional
+	// MaxAge specifies the content for the *access-control-max-age* header.
+	MaxAge string `json:"maxAge"`
 }
 
 // Route contains the set of routes for a virtual host.

@@ -67,6 +67,7 @@ func TestWebsocketsIngress(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("websocket.hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/"),
 						Action: withWebsocket(routeCluster("default/ws/80/da39a3ee5e")),
@@ -109,6 +110,7 @@ func TestWebsocketsIngress(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("websocket.hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/ws2"),
 						Action: withWebsocket(routeCluster("default/ws/80/da39a3ee5e")),
@@ -168,6 +170,7 @@ func TestWebsocketHTTPProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("websocket.hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/ws-2"),
 						Action: withWebsocket(routeCluster("default/ws/80/da39a3ee5e")),
@@ -225,6 +228,7 @@ func TestWebsocketHTTPProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("websocket.hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match:  routePrefix("/ws-2"),
 						Action: withWebsocket(routeCluster("default/ws/80/da39a3ee5e")),

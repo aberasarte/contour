@@ -430,12 +430,19 @@ func (b *Builder) computeHTTPProxy(proxy *projcontour.HTTPProxy) {
 	routes := b.computeRoutes(sw, proxy, nil, nil, tlsEnabled)
 	insecure := b.lookupVirtualHost(host)
 	addRoutes(insecure, routes)
+	cp, err := corsPolicy(proxy.Spec.VirtualHost.CorsPolicy)
+	if err != nil {
+		sw.SetInvalid(err.Error())
+		return
+	}
+	insecure.CorsPolicy = cp
 
 	// if TLS is enabled for this virtual host and there is no tcp proxy defined,
 	// then add routes to the secure virtualhost definition.
 	if tlsEnabled && proxy.Spec.TCPProxy == nil {
 		secure := b.lookupSecureVirtualHost(host)
 		addRoutes(secure, routes)
+		secure.CorsPolicy = cp
 	}
 }
 

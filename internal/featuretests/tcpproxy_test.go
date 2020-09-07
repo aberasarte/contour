@@ -429,6 +429,7 @@ func TestTCPProxyAndHTTPService(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard-tcp.example.com",
+					nil, /*corsPolicy*/
 					upgradeHTTPS(routePrefix("/")),
 				),
 			),
@@ -524,6 +525,7 @@ func TestTCPProxyAndHTTPServicePermitInsecure(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard-tcp.example.com",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/"),
 						// this is a regular route cluster, not a 301 upgrade as
@@ -619,6 +621,7 @@ func TestTCPProxyTLSPassthroughAndHTTPService(t *testing.T) {
 				// the route is present on port 80, but unconditionally
 				// upgrades to HTTPS.
 				envoy.VirtualHost("kuard-tcp.example.com",
+					nil, /*corsPolicy*/
 					upgradeHTTPS(routePrefix("/")),
 				),
 			),
@@ -713,6 +716,7 @@ func TestTCPProxyTLSPassthroughAndHTTPServicePermitInsecure(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("kuard-tcp.example.com",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/"),
 						// not a 301 upgrade because permitInsecure: true is in use.

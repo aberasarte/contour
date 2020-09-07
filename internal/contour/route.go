@@ -155,7 +155,7 @@ func (v *routeVisitor) onVirtualHost(vh *dag.VirtualHost) {
 		sortRoutes(routes)
 
 		v.routes[ENVOY_HTTP_LISTENER].VirtualHosts = append(v.routes[ENVOY_HTTP_LISTENER].VirtualHosts,
-			envoy.VirtualHost(vh.Name, routes...))
+			envoy.VirtualHost(vh.Name, envoy.CorsPolicy(vh.CorsPolicy), routes...))
 	}
 }
 
@@ -192,8 +192,9 @@ func (v *routeVisitor) onSecureVirtualHost(svh *dag.SecureVirtualHost) {
 			v.routes[name] = envoy.RouteConfiguration(name)
 		}
 
+		corspolicy := envoy.CorsPolicy(svh.CorsPolicy)
 		v.routes[name].VirtualHosts = append(v.routes[name].VirtualHosts,
-			envoy.VirtualHost(svh.VirtualHost.Name, routes...))
+			envoy.VirtualHost(svh.VirtualHost.Name, corspolicy, routes...))
 
 		// A fallback route configuration contains routes for all the vhosts that have the fallback certificate enabled.
 		// When a request is received, the default TLS filterchain will accept the connection,
@@ -205,7 +206,7 @@ func (v *routeVisitor) onSecureVirtualHost(svh *dag.SecureVirtualHost) {
 			}
 
 			v.routes[ENVOY_FALLBACK_ROUTECONFIG].VirtualHosts = append(v.routes[ENVOY_FALLBACK_ROUTECONFIG].VirtualHosts,
-				envoy.VirtualHost(svh.Name, routes...))
+				envoy.VirtualHost(svh.Name, corspolicy, routes...))
 		}
 	}
 }

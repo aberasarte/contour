@@ -82,6 +82,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/blog", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -145,6 +146,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/blog", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -208,6 +210,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/blog", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -271,6 +274,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/blog", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -334,6 +338,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/blog", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -395,6 +400,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/", dag.HeaderMatchCondition{
 							Name:      "x-header",
@@ -454,6 +460,7 @@ func TestConditions_ContainsHeader_HTTProxy(t *testing.T) {
 		Resources: resources(t,
 			envoy.RouteConfiguration("ingress_http",
 				envoy.VirtualHost("hello.world",
+					nil, /*corsPolicy*/
 					&envoy_api_v2_route.Route{
 						Match: routePrefix("/", dag.HeaderMatchCondition{
 							Name:      "x-header",

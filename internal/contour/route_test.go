@@ -172,6 +172,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -220,6 +221,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routeRegex("/[^/]+/invoices(/.*|/?)"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -264,6 +266,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/backend/80/da39a3ee5e"),
@@ -312,6 +315,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -373,6 +377,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -381,6 +386,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -440,6 +446,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -454,6 +461,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/backend/8080/da39a3ee5e"),
@@ -519,6 +527,7 @@ func TestRouteVisit(t *testing.T) {
 				envoy.RouteConfiguration("ingress_http"),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -583,6 +592,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -597,6 +607,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/8080/da39a3ee5e"),
@@ -656,6 +667,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/ws1"),
 							Action: websocketroute("default/kuard/8080/da39a3ee5e"),
@@ -699,6 +711,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routetimeout("default/kuard/8080/da39a3ee5e", 0),
@@ -738,6 +751,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routetimeout("default/kuard/8080/da39a3ee5e", 0),
@@ -777,6 +791,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routetimeout("default/kuard/8080/da39a3ee5e", 90*time.Second),
@@ -827,6 +842,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("my-very-very-long-service-host-name.subdomain.boring-dept.my.company",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routecluster("default/kuard/80/da39a3ee5e"),
@@ -866,6 +882,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routeretry("default/kuard/8080/da39a3ee5e", "5xx,gateway-error", 0, 0),
@@ -906,6 +923,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routeretry("default/kuard/8080/da39a3ee5e", "5xx,gateway-error", 7, 0),
@@ -947,6 +965,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routeretry("default/kuard/8080/da39a3ee5e", "5xx,gateway-error", 7, 0),
@@ -987,6 +1006,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routeretry("default/kuard/8080/da39a3ee5e", "5xx,gateway-error", 0, 150*time.Millisecond),
@@ -1027,6 +1047,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("*",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: routeretry("default/kuard/8080/da39a3ee5e", "5xx,gateway-error", 0, 150*time.Millisecond),
@@ -1091,6 +1112,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -1167,6 +1189,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -1244,6 +1267,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -1354,6 +1378,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -1430,6 +1455,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/"),
 							Action: withMirrorPolicy(routecluster("default/backend/80/da39a3ee5e"), "default/backendtwo/80/da39a3ee5e"),
@@ -1504,6 +1530,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -1518,6 +1545,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -1629,6 +1657,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match:  routePrefix("/blog/info"),
 							Action: routecluster("teama/backend/80/da39a3ee5e"),
@@ -1697,6 +1726,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/", dag.HeaderMatchCondition{
 								Name:      "x-header",
@@ -1755,6 +1785,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/", dag.HeaderMatchCondition{
 								Name:      "x-header",
@@ -1814,6 +1845,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/", dag.HeaderMatchCondition{
 								Name:      "x-header",
@@ -1873,6 +1905,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/", dag.HeaderMatchCondition{
 								Name:      "x-header",
@@ -1932,6 +1965,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/", dag.HeaderMatchCondition{
 								Name:      "x-header",
@@ -1999,6 +2033,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2112,6 +2147,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2126,6 +2162,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2145,6 +2182,7 @@ func TestRouteVisit(t *testing.T) {
 					)),
 				envoy.RouteConfiguration(ENVOY_FALLBACK_ROUTECONFIG,
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2270,6 +2308,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2282,6 +2321,7 @@ func TestRouteVisit(t *testing.T) {
 						},
 					),
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2296,6 +2336,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/projectcontour.io",
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2315,6 +2356,7 @@ func TestRouteVisit(t *testing.T) {
 					)),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2334,6 +2376,7 @@ func TestRouteVisit(t *testing.T) {
 					)),
 				envoy.RouteConfiguration(ENVOY_FALLBACK_ROUTECONFIG,
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2459,6 +2502,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2471,6 +2515,7 @@ func TestRouteVisit(t *testing.T) {
 						},
 					),
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2485,6 +2530,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/projectcontour.io",
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2504,6 +2550,7 @@ func TestRouteVisit(t *testing.T) {
 					)),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2523,6 +2570,7 @@ func TestRouteVisit(t *testing.T) {
 					)),
 				envoy.RouteConfiguration(ENVOY_FALLBACK_ROUTECONFIG,
 					envoy.VirtualHost("projectcontour.io",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2540,6 +2588,7 @@ func TestRouteVisit(t *testing.T) {
 							},
 						},
 					), envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
@@ -2716,6 +2765,7 @@ func TestRouteVisit(t *testing.T) {
 			want: routeConfigurations(
 				envoy.RouteConfiguration("ingress_http",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Redirect{
@@ -2730,6 +2780,7 @@ func TestRouteVisit(t *testing.T) {
 				),
 				envoy.RouteConfiguration("https/www.example.com",
 					envoy.VirtualHost("www.example.com",
+						nil, /*corsPolicy*/
 						&envoy_api_v2_route.Route{
 							Match: routePrefix("/"),
 							Action: &envoy_api_v2_route.Route_Route{
